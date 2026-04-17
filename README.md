@@ -1,7 +1,7 @@
 # RevoBank
 
 A backend service for RevoBank using NestJS and Prisma.
-Deployment:
+Deployment: https://abundant-insight-production-bb10.up.railway.app
 
 ## Endpoints
 
