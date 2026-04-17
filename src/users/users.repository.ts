@@ -14,7 +14,7 @@ export class UsersRepository {
     });
   }
 
-  update(username: string, updateUserDto: UpdateUserDto) {
+  update(updateUserDto: UpdateUserDto, username: string) {
     return this.prisma.profile.upsert({
       where: {
         username: username

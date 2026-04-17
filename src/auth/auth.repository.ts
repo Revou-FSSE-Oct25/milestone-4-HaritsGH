@@ -27,6 +27,9 @@ export class AuthRepository {
   }
 
   async findOne(username: string) {
+    if (!username) {
+      return null;
+    }
     return this.prisma.user.findUnique({
       where: {
         username

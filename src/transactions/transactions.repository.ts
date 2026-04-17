@@ -7,19 +7,28 @@ import { OneAccountTransactionDto, TwoAccountsTransactionDto } from "./dto/execu
 export class TransactionsRepository {
   constructor(private readonly prisma: PrismaService) {}
   
-  async getAllTransactions(account: string) {
+  async getAllTransactions(ownerUsername: string) {
+    const accountData = await this.prisma.account.findMany({
+      where: {
+        owner: ownerUsername
+      }
+    });
+    if (!accountData) {
+      throw new NotFoundException('Account not found');
+    }
     return await this.prisma.transaction.findMany({
       where: {
-        accountGenId: account
+        accountGenId: {
+          in: accountData.map(account => account.genId)
+        }
       }
     });
   }
   
-  async getTransactionById(id: number, account: string) {
+  async getTransactionById(id: number) {
     return await this.prisma.transaction.findUnique({
       where: {
-        id,
-        accountGenId: account
+        id
       }
     });
   }

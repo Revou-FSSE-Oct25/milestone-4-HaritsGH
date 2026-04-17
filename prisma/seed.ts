@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-// import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 import { Pool } from 'pg';
 import { PrismaPg } from '@prisma/adapter-pg';
 import 'dotenv/config';
@@ -13,12 +13,13 @@ async function main() {
   console.log('Starting database seeding...');
   
   // Create user
+  const psword = 'password123';
   const john = await prisma.user.upsert({
     where: { username: 'johndoe' },
     update: {},
     create: {
       username: 'johndoe',
-      userpw: 'password123',
+      userpw: bcrypt.hashSync(psword, 10),
       email: 'john.doe@example.com',
     },
   });
@@ -29,7 +30,7 @@ async function main() {
     update: {},
     create: {
       username: 'alicedoe',
-      userpw: 'password123',
+      userpw: bcrypt.hashSync(psword, 10),
       email: 'alice.doe@example.com',
     },
   });
@@ -59,22 +60,22 @@ async function main() {
 
   // Create account for the user
   const account = await prisma.account.upsert({
-    where: { genId: 'ACC001' },
+    where: { genId: 'ACC00001' },
     update: {},
     create: {
       owner: 'johndoe',
-      genId: 'ACC001',
+      genId: 'ACC00001',
       balance: 1000.50,
     },
   });
   console.log('Created account john');
 
   const account2 = await prisma.account.upsert({
-    where: { genId: 'ACC002' },
+    where: { genId: 'ACC00002' },
     update: {},
     create: {
       owner: 'alicedoe',
-      genId: 'ACC002',
+      genId: 'ACC00002',
       balance: 0,
     },
   });
@@ -88,7 +89,7 @@ async function main() {
       txprocess: 'D',
       amount: 1000.50,
       doneAt: new Date(),
-      accountGenId: 'ACC001',
+      accountGenId: 'ACC00001',
     },
   });
   console.log('Created deposit transaction:', deposit);
@@ -100,7 +101,7 @@ async function main() {
       txprocess: 'W',
       amount: 500.50,
       doneAt: new Date(),
-      accountGenId: 'ACC002',
+      accountGenId: 'ACC00002',
     },
   });
   console.log('Created withdraw transaction:', withdraw);
@@ -112,8 +113,8 @@ async function main() {
       txprocess: 'T',
       amount: 250.50,
       doneAt: new Date(),
-      accountGenId: 'ACC001',
-      transferTo: 'ACC002',
+      accountGenId: 'ACC00001',
+      transferTo: 'ACC00002',
     },
   });
   console.log('Created transfer transaction:', transfer);

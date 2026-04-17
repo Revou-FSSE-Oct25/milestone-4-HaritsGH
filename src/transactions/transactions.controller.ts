@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Request } from "@nestjs/common";
 import { TransactionsService } from "./transactions.service.js";
 import { OneAccountTransactionDto, TwoAccountsTransactionDto } from "./dto/execute-transaction.dto.js";
 
@@ -7,8 +7,8 @@ export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
   @Get()
-  async getAllTransactions() {
-    return await this.transactionsService.getAllTransactions();
+  async getAllTransactions(@Request() req: any) {
+    return await this.transactionsService.getAllTransactions(req.user);
   }
 
   @Get(':id')

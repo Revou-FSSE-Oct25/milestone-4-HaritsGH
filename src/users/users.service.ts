@@ -9,8 +9,7 @@ export class UsersService {
   getProfileInfo(username: string) {
     return this.usersRepository.getProfileInfo(username);
   }
-  update(updateUserDto: UpdateUserDto) {
-    const uname = 'harhar'
-    return this.usersRepository.update(uname, updateUserDto);
+  update(updateUserDto: UpdateUserDto, username: string) {
+    return this.usersRepository.update(updateUserDto, username);
   }
 }
