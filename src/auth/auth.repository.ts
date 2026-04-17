@@ -39,7 +39,17 @@ export class AuthRepository {
 
   async register(registerDto: RegisterDto) {
     return this.prisma.user.create({
-      data: registerDto
+      data: {
+        username: registerDto.username,
+        userpw: registerDto.userpw,
+        email: registerDto.email,
+        profile: {
+          create: {
+            fullname: registerDto.fullname,
+            favnum: registerDto.favNum  
+          }
+        }
+      }
     })
   }
 }
