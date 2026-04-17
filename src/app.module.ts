@@ -6,7 +6,6 @@ import { PrismaService } from './prisma.service.js';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
-import { ModuleService } from './module/module.service';
 import { AccountsModule } from './accounts/accounts.module';
 
 @Module({
@@ -17,7 +16,6 @@ import { AccountsModule } from './accounts/accounts.module';
       provide: 'APP_GUARD',
       useClass: JwtAuthGuard,
     },
-    ModuleService,
   ],
 })
 export class AppModule {}
