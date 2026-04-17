@@ -1,79 +1,83 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { Transaction } from "src/types/transactions.type.js";
+// import { Transaction } from "src/types/transactions.type.js";
+import { PrismaService } from "../prisma.service";
 
 @Injectable()
 export class TransactionsRepository {
-  private readonly mock = [
-    {
-      id: 1,
-      txType: 'deposit',
-      amount: 100000,
-      account: "8jl19",
-      doneAt: new Date(),
-    },
-    {
-      id: 2,
-      txType: 'withdraw',
-      amount: 50000,
-      account: "ssxa9",
-      doneAt: new Date(),
-    },
-    {
-      id: 3,
-      txType: 'transfer',
-      amount: 25000,
-      account: "8jl19",
-      transferTo: "ssxa9",
-      doneAt: new Date(),
-    },
-  ];
+  constructor(private readonly prisma: PrismaService) {}
+  // private readonly mock = [
+  //   {
+  //     id: 1,
+  //     txType: 'deposit',
+  //     amount: 100000,
+  //     account: "8jl19",
+  //     doneAt: new Date(),
+  //   },
+  //   {
+  //     id: 2,
+  //     txType: 'withdraw',
+  //     amount: 50000,
+  //     account: "ssxa9",
+  //     doneAt: new Date(),
+  //   },
+  //   {
+  //     id: 3,
+  //     txType: 'transfer',
+  //     amount: 25000,
+  //     account: "8jl19",
+  //     transferTo: "ssxa9",
+  //     doneAt: new Date(),
+  //   },
+  // ];
   
-  getAllTransactions(account: string) : Transaction[] {
-    return this.mock.filter((t) => t.account === account);
+  async getAllTransactions(account: string) {
+    return await this.prisma.transaction.findMany({
+      where: {
+        accountGenId: account
+      }
+    });
   }
   
-  getTransactionById(id: number, account: string) : Transaction[] {
-    const transaction = this.mock.find((t) => t.id === id && t.account === account);
-    if (!transaction) {
-      throw new NotFoundException(`Transaction with ID ${id} not found`);
-    }
-    return [transaction];
+  async getTransactionById(id: number, account: string) {
+    return await this.prisma.transaction.findUnique({
+      where: {
+        id,
+        accountGenId: account
+      }
+    });
   }
 
-  deposit(amount: number, account: string) : Transaction[] {
-    const transaction = {
-      id: this.mock.length + 1,
-      txType: 'deposit',
-      amount,
-      account,
-      doneAt: new Date(),
-    };
-    this.mock.push(transaction);
-    return [transaction];
+  async deposit(amount: number, account: string) {
+    return await this.prisma.transaction.create({
+      data: {
+        txprocess: 'D',
+        amount,
+        accountGenId: account,
+        doneAt: new Date(),
+      }
+    });
   }
   
-  withdraw(amount: number, account: string) : Transaction[] {
-    const transaction = {
-      id: this.mock.length + 1,
-      txType: 'withdraw',
-      amount,
-      account,
-      doneAt: new Date(),
-    };
-    this.mock.push(transaction);
-    return [transaction];
+  async withdraw(amount: number, account: string) {
+    return await this.prisma.transaction.create({
+      data: {
+        txprocess: 'W',
+        amount,
+        accountGenId: account,
+        doneAt: new Date(),
+      }
+    });
   }
   
-  transfer(amount: number, account: string, transferTo: string) : Transaction[] {
-    const transaction = {
-      id: this.mock.length + 1,
-      txType: 'transfer',
-      amount,
-      account,
-      transferTo,
-      doneAt: new Date(),
-    };
-    this.mock.push(transaction);
-    return [transaction];
+  async transfer(amount: number, account: string, transferTo: string) {
+    return await this.prisma.transaction.create({
+      data: {
+        txprocess: 'T',
+        amount,
+        accountGenId: account,
+        doneAt: new Date(),
+        transferTo
+      }
+    });
   }
 }

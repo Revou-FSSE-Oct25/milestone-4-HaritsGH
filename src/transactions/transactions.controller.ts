@@ -8,27 +8,27 @@ export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
   @Get()
-  getAllTransactions() : TransanctionResponse {
-    return this.transactionsService.getAllTransactions();
+  async getAllTransactions() {
+    return await this.transactionsService.getAllTransactions();
   }
 
   @Get(':id')
-  getTransactionById(@Param('id', ParseIntPipe) id: number, @Param('account') account: string) : TransanctionResponse {
-    return this.transactionsService.getTransactionById(id, account);
+  async getTransactionById(@Param('id', ParseIntPipe) id: number) {
+    return await this.transactionsService.getTransactionById(id);
   }
 
   @Post('/deposit')
-  deposit(@Body() body: OneAccountTransactionDto) : TransanctionResponse {
-    return this.transactionsService.deposit(body.amount, body.account);
+  async deposit(@Body() body: OneAccountTransactionDto) {
+    return await this.transactionsService.deposit(body.amount);
   }
 
   @Post('/withdraw')
-  withdraw(@Body() body: OneAccountTransactionDto) : TransanctionResponse {
-    return this.transactionsService.withdraw(body.amount, body.account);
+  async withdraw(@Body() body: OneAccountTransactionDto) {
+    return await this.transactionsService.withdraw(body.amount);
   }
   
   @Post('/transfer')
-  transfer(@Body() body: TwoAccountsTransactionDto) : TransanctionResponse {
-    return this.transactionsService.transfer(body.amount, body.account, body.transferTo);
+  async transfer(@Body() body: TwoAccountsTransactionDto) {
+    return await this.transactionsService.transfer(body.amount, body.transferTo);
   }
 }

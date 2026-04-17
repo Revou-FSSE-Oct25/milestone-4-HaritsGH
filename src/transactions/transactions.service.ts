@@ -1,51 +1,54 @@
 import { Injectable } from '@nestjs/common';
 import { TransactionsRepository } from './transactions.repository.js';
-import type { TransanctionResponse } from 'src/types/transactions.type.js';
+// import type { TransanctionResponse } from 'src/types/transactions.type.js';
 
 @Injectable()
 export class TransactionsService {
   constructor(private readonly transactionsRepository: TransactionsRepository) {}
   
-  getAllTransactions() : TransanctionResponse {
+  async getAllTransactions() {
     // return 'This action returns all transactions';
-    const account = "8jl19";
+    const account = "ACC001";
     return {
       message: "All transactions retrieved",
-      data: this.transactionsRepository.getAllTransactions(account)
+      data: await this.transactionsRepository.getAllTransactions(account)
     }
   }
 
-  getTransactionById(id: number, account: string) : TransanctionResponse {
+  async getTransactionById(id: number) {
     // return `This action returns transaction #${id}`;
+    const account = "ACC001";
     return {
       message: "Transaction retrieved",
-      data: this.transactionsRepository.getTransactionById(id, account)
+      data: await this.transactionsRepository.getTransactionById(id, account)
     };
   }
 
-  deposit(amount: number, account: string) : TransanctionResponse {
+  async deposit(amount: number) {
     // account balance increased by amount
-    
+    const account = "ACC001";
     return {
       message: "Deposit successful",
-      data: this.transactionsRepository.deposit(amount, account)
+      data: await this.transactionsRepository.deposit(amount, account)
     };
   }
 
-  withdraw(amount: number, account: string) : TransanctionResponse {
+  async withdraw(amount: number) {
     // account balance decreased by amount
+    const account = "ACC001";
     return {
       message: "Withdrawal successful",
-      data: this.transactionsRepository.withdraw(amount, account)
+      data: await this.transactionsRepository.withdraw(amount, account)
     };
   }
 
-  transfer(amount: number, fromAccount: string, toAccount: string) : TransanctionResponse {
+  async transfer(amount: number, toAccount: string) {
     // fromAccount balance decreased by amount
     // toAccount balance increased by amount
+    const fromAccount = "ACC001";
     return {
       message: "Transfer successful",
-      data: this.transactionsRepository.transfer(amount, fromAccount, toAccount)
+      data: await this.transactionsRepository.transfer(amount, fromAccount, toAccount)
     };
   }
 }
