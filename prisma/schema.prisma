@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum TxType {
+  D
+  W
+  T
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  fullname  String   @db.VarChar(100)
+  username  String   @unique @db.VarChar(100)
+  userpw    String   @db.VarChar(50)
+  email     String   @unique @db.VarChar(100)
+  createdAt DateTime @default(now()) @map("created_at") @db.Date
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamp
+
+  // relations
+  accounts Account[]
+  profile  Profile?
+  
+  @@map("users")
+}
+
+model Profile {
+  username String  @id @db.VarChar(100)
+  email    String  @unique @db.VarChar(100)
+  favnum   Int?
+
+  // relations
+  user User @relation(fields: [username], references: [username])
+  
+  @@map("profiles")
+}
+
+model Account {
+  id        Int      @id @default(autoincrement())
+  owner     String   @db.VarChar(100)
+  genId     String   @db.VarChar(8) @unique
+  balance   Float    @default(0.0)
+  createdAt DateTime @default(now()) @map("created_at") @db.Date
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamp
+  
+  // relations
+  user         User          @relation(fields: [owner], references: [username])
+  transactions Transaction[]
+  receivedTransactions Transaction[] @relation("TransactionTarget")
+  
+  @@map("accounts")
+}
+
+model Transaction {
+  id            Int      @id @default(autoincrement())
+  txprocess     TxType
+  amount        Float    @default(0.0)
+  doneAt        DateTime @default(now()) @map("done_at") @db.Timestamp
+  accountGenId  String   @map("account") @db.VarChar(8)
+  transferTo    String?  @map("transfer_to") @db.VarChar(8)
+
+  // relations
+  account Account @relation(fields: [accountGenId], references: [genId])
+  targetAccount Account? @relation("TransactionTarget", fields: [transferTo], references: [genId])
+  
+  @@map("transactions")
+}
