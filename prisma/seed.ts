@@ -14,10 +14,9 @@ async function main() {
   
   // Create user
   const john = await prisma.user.upsert({
-    where: { email: 'john.doe@example.com' },
+    where: { username: 'johndoe' },
     update: {},
     create: {
-      fullname: 'John Doe',
       username: 'johndoe',
       userpw: 'password123',
       email: 'john.doe@example.com',
@@ -26,10 +25,9 @@ async function main() {
   console.log('Created user john');
 
   const alice = await prisma.user.upsert({
-    where: { email: 'alice.doe@example.com' },
+    where: { username: 'alicedoe' },
     update: {},
     create: {
-      fullname: 'Alice Doe',
       username: 'alicedoe',
       userpw: 'password123',
       email: 'alice.doe@example.com',
@@ -43,8 +41,7 @@ async function main() {
     update: {},
     create: {
       username: 'johndoe',
-      email: 'john.doe@example.com',
-      favnum: 7,
+      fullname: 'John Doe',
     },
   });
   console.log('Created profile john');
@@ -54,7 +51,7 @@ async function main() {
     update: {},
     create: {
       username: 'alicedoe',
-      email: 'alice.doe@example.com',
+      fullname: 'Alice Doe',
       favnum: 42,
     },
   });

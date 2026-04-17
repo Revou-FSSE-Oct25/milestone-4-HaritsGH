@@ -5,14 +5,20 @@ import { AppService } from './app.service.js';
 // import { AccountsModule } from './accounts/accounts.module.js';
 import { TransactionsModule } from './transactions/transactions.module.js';
 import { PrismaService } from './prisma.service.js';
-// import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './auth/auth.module';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 
 @Module({
   // imports: [AuthModule, UserModule, AccountsModule, TransactionsModule],
   // imports: [TransactionsModule, AuthModule],
-  imports: [TransactionsModule],
+  imports: [TransactionsModule, AuthModule],
   controllers: [AppController],
-  providers: [AppService, PrismaService],
+  providers: [AppService, PrismaService,
+    {
+      provide: 'APP_GUARD',
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
 export class AppModule {}
 

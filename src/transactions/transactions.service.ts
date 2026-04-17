@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { TransactionsRepository } from './transactions.repository.js';
-// import type { TransanctionResponse } from 'src/types/transactions.type.js';
+import { OneAccountTransactionDto, TwoAccountsTransactionDto } from './dto/execute-transaction.dto.js';
 
 @Injectable()
 export class TransactionsService {
@@ -24,31 +24,29 @@ export class TransactionsService {
     };
   }
 
-  async deposit(amount: number) {
+  async deposit(dto: OneAccountTransactionDto) {
     // account balance increased by amount
     const account = "ACC001";
     return {
       message: "Deposit successful",
-      data: await this.transactionsRepository.deposit(amount, account)
+      data: await this.transactionsRepository.deposit(dto)
     };
   }
 
-  async withdraw(amount: number) {
+  async withdraw(dto: OneAccountTransactionDto) {
     // account balance decreased by amount
-    const account = "ACC001";
     return {
       message: "Withdrawal successful",
-      data: await this.transactionsRepository.withdraw(amount, account)
+      data: await this.transactionsRepository.withdraw(dto)
     };
   }
 
-  async transfer(amount: number, toAccount: string) {
+  async transfer(dto: TwoAccountsTransactionDto) {
     // fromAccount balance decreased by amount
     // toAccount balance increased by amount
-    const fromAccount = "ACC001";
     return {
       message: "Transfer successful",
-      data: await this.transactionsRepository.transfer(amount, fromAccount, toAccount)
+      data: await this.transactionsRepository.transfer(dto)
     };
   }
 }

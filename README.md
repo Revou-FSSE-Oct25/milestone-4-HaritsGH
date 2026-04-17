@@ -7,7 +7,7 @@ Deployment:
 
 Not require authentication:
 
-Auth
+**Auth**
 
 - POST /auth/register - Register a new user
 - POST /auth/login - Login a user
@@ -15,12 +15,12 @@ Auth
 
 Require authentication:
 
-User
+**User**
 
 - GET /user/profile - Get user profile
 - PUT /user/profile - Update user profile
 
-Account
+**Account**
 
 - GET /accounts - Get all accounts
 - GET /accounts/:generatedId - Get a specific account details
@@ -28,7 +28,7 @@ Account
 - PATCH /accounts/:generatedId - Update account balance
 - DELETE /accounts/:generatedId - Delete account
 
-Transaction
+**Transaction**
 - GET /transactions - Get all transactions
 - GET /transactions/:id - Get transaction by ID
 - POST /transactions/deposit - Create a new deposit transaction
