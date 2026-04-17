@@ -19,7 +19,7 @@ export class TransactionsRepository {
     return await this.prisma.transaction.findMany({
       where: {
         accountGenId: {
-          in: accountData.map(account => account.genId)
+          in: accountData.map(account => account.geneid)
         }
       }
     });

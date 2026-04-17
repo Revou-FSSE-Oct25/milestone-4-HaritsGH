@@ -60,22 +60,22 @@ async function main() {
 
   // Create account for the user
   const account = await prisma.account.upsert({
-    where: { genId: 'ACC00001' },
+    where: { geneid: 'ACC00001' },
     update: {},
     create: {
       owner: 'johndoe',
-      genId: 'ACC00001',
+      geneid: 'ACC00001',
       balance: 1000.50,
     },
   });
   console.log('Created account john');
 
   const account2 = await prisma.account.upsert({
-    where: { genId: 'ACC00002' },
+    where: { geneid: 'ACC00002' },
     update: {},
     create: {
       owner: 'alicedoe',
-      genId: 'ACC00002',
+      geneid: 'ACC00002',
       balance: 0,
     },
   });

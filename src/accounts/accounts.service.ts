@@ -7,8 +7,8 @@ export class AccountsService {
 
   async create(owner: string) {
     // return 'This action adds a new account';
-    const genId = Math.random().toString(36).substring(2, 10); // generate 8 character alphanumeric string
-    return this.accountsRepository.create(owner, genId);
+    const geneid = Math.random().toString(36).substring(2, 10); // generate 8 character alphanumeric string
+    return this.accountsRepository.create(owner, geneid);
   }
 
   async findAll(owner: string) {

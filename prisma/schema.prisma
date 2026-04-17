@@ -41,7 +41,7 @@ model Profile {
 model Account {
   id        Int      @id @default(autoincrement())
   owner     String   @db.VarChar(100)
-  genId     String   @db.VarChar(8) @unique
+  geneid     String   @db.VarChar(8) @unique
   balance   Float    @default(0.0)
   createdAt DateTime @default(now()) @map("created_at") @db.Date
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamp
@@ -63,8 +63,8 @@ model Transaction {
   transferTo    String?  @map("transfer_to") @db.VarChar(8)
 
   // relations
-  account Account @relation(fields: [accountGenId], references: [genId])
-  targetAccount Account? @relation("TransactionTarget", fields: [transferTo], references: [genId])
+  account Account @relation(fields: [accountGenId], references: [geneid])
+  targetAccount Account? @relation("TransactionTarget", fields: [transferTo], references: [geneid])
   
   @@map("transactions")
 }

@@ -21,19 +21,19 @@ export class AccountsRepository {
     });
   }
 
-  findOneByGenId(genId: string) {
+  FindOneByGeneId(geneid: string) {
     return this.prisma.account.findUnique({
       where: {
-        genId,
+        geneid,
       },
     });
   }
 
-  create(owner: string, genId: string) {
+  create(owner: string, geneid: string) {
     return this.prisma.account.create({
       data: {
         owner,
-        genId,
+        geneid,
       },
     });
   }

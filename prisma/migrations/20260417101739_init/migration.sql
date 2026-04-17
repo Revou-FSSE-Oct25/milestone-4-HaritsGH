@@ -27,7 +27,7 @@ CREATE TABLE "profiles" (
 CREATE TABLE "accounts" (
     "id" SERIAL NOT NULL,
     "owner" VARCHAR(100) NOT NULL,
-    "genId" VARCHAR(8) NOT NULL,
+    "geneid" VARCHAR(8) NOT NULL,
     "balance" DOUBLE PRECISION NOT NULL DEFAULT 0.0,
     "created_at" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP NOT NULL,
@@ -57,7 +57,7 @@ CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 CREATE UNIQUE INDEX "profiles_email_key" ON "profiles"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "accounts_genId_key" ON "accounts"("genId");
+CREATE UNIQUE INDEX "accounts_geneid_key" ON "accounts"("geneid");
 
 -- AddForeignKey
 ALTER TABLE "profiles" ADD CONSTRAINT "profiles_username_fkey" FOREIGN KEY ("username") REFERENCES "users"("username") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -66,4 +66,4 @@ ALTER TABLE "profiles" ADD CONSTRAINT "profiles_username_fkey" FOREIGN KEY ("use
 ALTER TABLE "accounts" ADD CONSTRAINT "accounts_owner_fkey" FOREIGN KEY ("owner") REFERENCES "users"("username") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "transactions" ADD CONSTRAINT "transactions_account_fkey" FOREIGN KEY ("account") REFERENCES "accounts"("genId") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "transactions" ADD CONSTRAINT "transactions_account_fkey" FOREIGN KEY ("account") REFERENCES "accounts"("geneid") ON DELETE RESTRICT ON UPDATE CASCADE;

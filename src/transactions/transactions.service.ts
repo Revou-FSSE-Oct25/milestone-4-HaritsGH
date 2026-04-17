@@ -28,7 +28,7 @@ export class TransactionsService {
 
   async deposit(dto: OneAccountTransactionDto) {
     // account balance increased by amount
-    const account = await this.accountsRepository.findOneByGenId(dto.account);
+    const account = await this.accountsRepository.FindOneByGeneId(dto.account);
     if (!account) {
       throw new NotFoundException('Account not found');
     }
@@ -42,7 +42,7 @@ export class TransactionsService {
 
   async withdraw(dto: OneAccountTransactionDto) {
     // account balance decreased by amount
-    const account = await this.accountsRepository.findOneByGenId(dto.account);
+    const account = await this.accountsRepository.FindOneByGeneId(dto.account);
     if (!account) {
       throw new NotFoundException('Account not found');
     }
@@ -61,7 +61,7 @@ export class TransactionsService {
 
   async transfer(dto: TwoAccountsTransactionDto) {
     // fromAccount balance decreased by amount
-    const fromAccount = await this.accountsRepository.findOneByGenId(dto.account);
+    const fromAccount = await this.accountsRepository.FindOneByGeneId(dto.account);
     if (!fromAccount) {
       throw new NotFoundException('Source account not found');
     }
@@ -73,7 +73,7 @@ export class TransactionsService {
     await this.accountsRepository.update(fromAccount.id, fromAccount.balance - dto.amount);
     
     // toAccount balance increased by amount
-    const toAccount = await this.accountsRepository.findOneByGenId(dto.transferTo);
+    const toAccount = await this.accountsRepository.FindOneByGeneId(dto.transferTo);
     if (!toAccount) {
       throw new NotFoundException('Destination account not found');
     }
