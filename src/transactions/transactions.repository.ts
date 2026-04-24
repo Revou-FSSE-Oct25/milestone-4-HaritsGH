@@ -1,5 +1,4 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-// import { Transaction } from "src/types/transactions.type.js";
 import { PrismaService } from "../prisma.service";
 import { OneAccountTransactionDto, TwoAccountsTransactionDto } from "./dto/execute-transaction.dto";
 
@@ -13,7 +12,7 @@ export class TransactionsRepository {
         owner: ownerUsername
       }
     });
-    if (!accountData) {
+    if (accountData.length === 0) {
       throw new NotFoundException('Account not found');
     }
     return await this.prisma.transaction.findMany({

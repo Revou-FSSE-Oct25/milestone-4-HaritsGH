@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Post, Request } from "@nestjs/common";
-import { TransactionsService } from "./transactions.service.js";
-import { OneAccountTransactionDto, TwoAccountsTransactionDto } from "./dto/execute-transaction.dto.js";
+import { TransactionsService } from "./transactions.service";
+import { OneAccountTransactionDto, TwoAccountsTransactionDto } from "./dto/execute-transaction.dto";
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @ApiBearerAuth('JWT')

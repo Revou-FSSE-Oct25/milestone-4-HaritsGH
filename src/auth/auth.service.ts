@@ -52,7 +52,7 @@ export class AuthService {
 
     return {
       message: 'Login successful',
-      access_token_lomgin: this.jwtService.sign(payload)
+      access_token: this.jwtService.sign(payload)
     };
   }
 }

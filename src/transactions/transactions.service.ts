@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { TransactionsRepository } from './transactions.repository.js';
-import { OneAccountTransactionDto, TwoAccountsTransactionDto } from './dto/execute-transaction.dto.js';
-import { AccountsRepository } from '../accounts/accounts.repository.js';
+import { TransactionsRepository } from './transactions.repository';
+import { OneAccountTransactionDto, TwoAccountsTransactionDto } from './dto/execute-transaction.dto';
+import { AccountsRepository } from '../accounts/accounts.repository';
 
 @Injectable()
 export class TransactionsService {

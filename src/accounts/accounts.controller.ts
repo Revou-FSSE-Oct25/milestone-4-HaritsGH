@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, Request } from '@nestjs/common';
-import { AccountsService } from './accounts.service.js';
-import { UpdateAccountDto } from './dto/update-accounts.dto.js';
+import { AccountsService } from './accounts.service';
+import { UpdateAccountDto } from './dto/update-accounts.dto';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @ApiBearerAuth('JWT')

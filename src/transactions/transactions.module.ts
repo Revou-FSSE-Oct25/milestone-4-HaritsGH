@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
-import { TransactionsController } from "./transactions.controller.js";
-import { TransactionsService } from "./transactions.service.js";
-import { TransactionsRepository } from "./transactions.repository.js"; // added import statement
+import { TransactionsController } from "./transactions.controller";
+import { TransactionsService } from "./transactions.service";
+import { TransactionsRepository } from "./transactions.repository"; // added import statement
 import { PrismaService } from "../prisma.service";
-import { AccountsRepository } from "../accounts/accounts.repository.js";
+import { AccountsRepository } from "../accounts/accounts.repository";
 
 @Module({
   controllers: [TransactionsController],
